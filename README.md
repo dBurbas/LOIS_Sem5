@@ -1,2 +1,5 @@
-# LOIS_Sem5
-Education repository for LOIS subject
+# Репозиторий ЛОИС семестр 5
+## Ссылки:
+1) [Лабораторная №1](/lab1/)
+2) [Лабораторная №2](/lab2/)
+
