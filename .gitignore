@@ -1,0 +1,24 @@
+# Ignoring MacOS service files
+.DS_Store
+
+# Ignore python venv
+.venv/
+venv/
+ENV/
+
+# Ignore pycache
+__pycache__/
+**.pytest_cache/
+
+# Ignore IDE
+.vscode/
+.idea/
+
+# Ignore coverage file
+.coverage
+
+# Ignore credential files
+.env
+
+# Coverage
+**.coverage
