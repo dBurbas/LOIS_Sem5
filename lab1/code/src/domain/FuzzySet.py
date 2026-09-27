@@ -24,3 +24,8 @@ class FuzzySet:
             raise ValueError(
                 f"Степень принадлежности должна быть от 0 до 1. Получено: {degree}"
             )
+
+    def almost_equals(self, other: "FuzzySet", eps: float = 1e-6) -> bool:
+        keys = self.elements | other.elements
+        return all(abs(self.get_elem_val(k[0]) - other.get_elem_val(k[0])) < eps for k in keys)
+
