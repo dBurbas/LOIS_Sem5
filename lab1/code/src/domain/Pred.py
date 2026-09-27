@@ -1,6 +1,6 @@
 class Pred:
     def __init__(self, name: str):
-        self._name = name
+        self.name = name
 
     # ?: нужно ли двойное нижнее подчеркивание
     # TODO: реализовать валидацию
