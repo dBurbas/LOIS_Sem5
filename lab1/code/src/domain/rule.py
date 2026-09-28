@@ -1,8 +1,5 @@
-from lab1.code.src.domain.Pred import Pred
-
-
 class Rule:
-    def __init__(self, antecedent: Pred, consequent: Pred):
+    def __init__(self, antecedent: str, consequent: str):
         self._antecedent = antecedent
         self._consequent = consequent
 

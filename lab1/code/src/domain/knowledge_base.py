@@ -1,5 +1,5 @@
-from lab1.code.src.domain.Fact import Fact
-from lab1.code.src.domain.Rule import Rule
+from lab1.code.src.domain.fact import Fact
+from lab1.code.src.domain.rule import Rule
 
 
 class KnowledgeBase:
