@@ -118,7 +118,6 @@ class App:
             "4 - Сохранение текущей базы знаний в файл",
             "5 - Прямой нечеткий логический вывод",
             "6 - Выход",
-            "7 - Вопросы",
         ]
 
         while True:
@@ -177,63 +176,6 @@ class App:
                     "[bold yellow]Выход из программы. До свидания![/bold yellow]"
                 )
                 sys.exit(0)
-            elif action.startswith("7"):
-                question_kb: KnowledgeBase = Parser.process_knowledge_base(
-                    "lab1/code/source/questions.txt"
-                )
-
-                console.print("Ответы на вопросы:")
-                console.print("Вопрос 1:")
-                rule = question_kb.rule_by_antecedent_consequent("A", "B")
-                observ = question_kb.get_source_fact("C")
-                console.print(fact_to_str(question_kb.get_source_fact("A")))
-                console.print(fact_to_str(question_kb.get_source_fact("B")))
-                result = FuzzyInferenceEngine.generalized_modus_ponens(rule, observ)
-                inferenced_fact_print(result, rule)
-
-                console.print("Вопрос 2:")
-                rule = question_kb.rule_by_antecedent_consequent("A1", "B1")
-                observ = question_kb.get_source_fact("C1")
-                console.print(fact_to_str(question_kb.get_source_fact("A1")))
-                console.print(fact_to_str(question_kb.get_source_fact("B1")))
-                result = FuzzyInferenceEngine.generalized_modus_ponens(rule, observ)
-                inferenced_fact_print(result, rule)
-
-                console.print("Вопрос 3:")
-                rule = question_kb.rule_by_antecedent_consequent("A2", "B2")
-                observ = question_kb.get_source_fact("C2")
-                console.print(fact_to_str(question_kb.get_source_fact("A2")))
-                console.print(fact_to_str(question_kb.get_source_fact("B2")))
-                result = FuzzyInferenceEngine.generalized_modus_ponens(rule, observ)
-                inferenced_fact_print(result, rule)
-
-                console.print("Вопрос 4:")
-                rule = question_kb.rule_by_antecedent_consequent("A3", "B3")
-                observ = question_kb.get_source_fact("C3")
-                console.print(fact_to_str(question_kb.get_source_fact("A3")))
-                console.print(fact_to_str(question_kb.get_source_fact("B3")))
-                result = FuzzyInferenceEngine.generalized_modus_ponens(rule, observ)
-                inferenced_fact_print(result, rule)
-
-                console.print("Вопрос 5:")
-                rule = question_kb.rule_by_antecedent_consequent("A4", "B4")
-                observ = question_kb.get_source_fact("C4")
-                console.print(fact_to_str(question_kb.get_source_fact("A4")))
-                console.print(fact_to_str(question_kb.get_source_fact("B4")))
-                result = FuzzyInferenceEngine.generalized_modus_ponens(rule, observ)
-                inferenced_fact_print(result, rule)
-
-                console.print("Вопрос 6:")
-                rule = question_kb.rule_by_antecedent_consequent("A5", "B5")
-                observ = question_kb.get_source_fact("C5")
-                console.print(fact_to_str(question_kb.get_source_fact("A5")))
-                console.print(fact_to_str(question_kb.get_source_fact("B5")))
-                result = FuzzyInferenceEngine.generalized_modus_ponens(rule, observ)
-                inferenced_fact_print(result, rule)
-
-            questionary.press_any_key_to_continue(
-                "Нажмите любую клавишу для продолжения..."
-            ).ask()
 
 
 if __name__ == "__main__":
