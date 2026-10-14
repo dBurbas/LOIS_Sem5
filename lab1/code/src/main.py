@@ -23,14 +23,6 @@ from rich.table import Table
 STOP_COMMANDS = {"q", "quit", "stop", "exit"}
 
 
-def ask_continue() -> bool:
-    try:
-        cmd = input("Enter - продолжить, q - остановить: ").strip().lower()
-    except EOFError:
-        return True
-    return cmd not in STOP_COMMANDS
-
-
 def fuzzy_set_to_str(fuzzy_set: FuzzySet) -> str:
     return (
         "{"
@@ -42,25 +34,34 @@ def fuzzy_set_to_str(fuzzy_set: FuzzySet) -> str:
     )
 
 
-def fact_to_str(fact: Fact, pred_var: str = "x") -> None:
+def fact_to_str(fact: Fact, pred_var: str = "x") -> str:
     return str(f"{fact.pred_name}({pred_var}) = {fuzzy_set_to_str(fact.fuzzy_set)}")
 
 
-def inferenced_fact_print(fact: Fact, rule: Rule) -> None:
+def inferenced_fact_print(
+    fact: Fact, rule: Rule, var1: str = "x", var2: str = "y"
+) -> None:
+    """Вывод в консоль выведенного нового факта на основе правила
+    с отображением формулы вывода.
+    :param fact: Новый выведенный факт
+    :param rule: Правило на основе которого выведен факт
+    :param var1: Переменная для антецедента
+    :param var2: Переменная для консеквента"""
     print(
-        f"{fact.pred_name}'(y) =  sup({{A'(x)/~\\({rule_to_str(rule, 'x', 'y')})|x}}) = {fuzzy_set_to_str(fact.fuzzy_set)}\n"
+        f"{fact.pred_name}'({var2}) = sup({{A'(x)/~\\({rule_to_str(rule, var1, var2)})|{var1}}}) = {fuzzy_set_to_str(fact.fuzzy_set)}\n"
     )
 
 
 def rule_to_str(
     rule: Rule, antecedent_var: str = "x", consequent_var: str = "y"
-) -> None:
+) -> str:
     return str(
         f"{rule.antecedent_name}({antecedent_var}) ~> {rule.consequent_name}({consequent_var})"
     )
 
 
 def print_relation(rule: Rule, console: Console | None = None) -> None:
+    """Вывод матрицы значений пар <элемент антецедента и элемент консеквента>."""
     console = console or Console()
     xs = sorted(rule.antecedent_elements)
     ys = sorted(rule.consequent_elements)
@@ -76,6 +77,16 @@ def print_relation(rule: Rule, console: Console | None = None) -> None:
         table.add_row(x, *(f"{rule.relation[(x, y)]:.2f}" for y in ys))
 
     console.print(table)
+
+
+def ask_continue() -> bool:
+    """Функция для прерывания прямого логического вывода
+    через запрос пользователю на продолжение"""
+    try:
+        cmd = input("Enter - продолжить, q - остановить: ").strip().lower()
+    except EOFError:
+        return True
+    return cmd not in STOP_COMMANDS
 
 
 console = Console()
@@ -107,6 +118,7 @@ class App:
             "4 - Сохранение текущей базы знаний в файл",
             "5 - Прямой нечеткий логический вывод",
             "6 - Выход",
+            "7 - Вопросы",
         ]
 
         while True:
@@ -165,6 +177,59 @@ class App:
                     "[bold yellow]Выход из программы. До свидания![/bold yellow]"
                 )
                 sys.exit(0)
+            elif action.startswith("7"):
+                question_kb: KnowledgeBase = Parser.process_knowledge_base(
+                    "lab1/code/source/questions.txt"
+                )
+
+                console.print("Ответы на вопросы:")
+                console.print("Вопрос 1:")
+                rule = question_kb.rule_by_antecedent_consequent("A", "B")
+                observ = question_kb.get_source_fact("C")
+                console.print(fact_to_str(question_kb.get_source_fact("A")))
+                console.print(fact_to_str(question_kb.get_source_fact("B")))
+                result = FuzzyInferenceEngine.generalized_modus_ponens(rule, observ)
+                inferenced_fact_print(result, rule)
+
+                console.print("Вопрос 2:")
+                rule = question_kb.rule_by_antecedent_consequent("A1", "B1")
+                observ = question_kb.get_source_fact("C1")
+                console.print(fact_to_str(question_kb.get_source_fact("A1")))
+                console.print(fact_to_str(question_kb.get_source_fact("B1")))
+                result = FuzzyInferenceEngine.generalized_modus_ponens(rule, observ)
+                inferenced_fact_print(result, rule)
+
+                console.print("Вопрос 3:")
+                rule = question_kb.rule_by_antecedent_consequent("A2", "B2")
+                observ = question_kb.get_source_fact("C2")
+                console.print(fact_to_str(question_kb.get_source_fact("A2")))
+                console.print(fact_to_str(question_kb.get_source_fact("B2")))
+                result = FuzzyInferenceEngine.generalized_modus_ponens(rule, observ)
+                inferenced_fact_print(result, rule)
+
+                console.print("Вопрос 4:")
+                rule = question_kb.rule_by_antecedent_consequent("A3", "B3")
+                observ = question_kb.get_source_fact("C3")
+                console.print(fact_to_str(question_kb.get_source_fact("A3")))
+                console.print(fact_to_str(question_kb.get_source_fact("B3")))
+                result = FuzzyInferenceEngine.generalized_modus_ponens(rule, observ)
+                inferenced_fact_print(result, rule)
+
+                console.print("Вопрос 5:")
+                rule = question_kb.rule_by_antecedent_consequent("A4", "B4")
+                observ = question_kb.get_source_fact("C4")
+                console.print(fact_to_str(question_kb.get_source_fact("A4")))
+                console.print(fact_to_str(question_kb.get_source_fact("B4")))
+                result = FuzzyInferenceEngine.generalized_modus_ponens(rule, observ)
+                inferenced_fact_print(result, rule)
+
+                console.print("Вопрос 6:")
+                rule = question_kb.rule_by_antecedent_consequent("A5", "B5")
+                observ = question_kb.get_source_fact("C5")
+                console.print(fact_to_str(question_kb.get_source_fact("A5")))
+                console.print(fact_to_str(question_kb.get_source_fact("B5")))
+                result = FuzzyInferenceEngine.generalized_modus_ponens(rule, observ)
+                inferenced_fact_print(result, rule)
 
             questionary.press_any_key_to_continue(
                 "Нажмите любую клавишу для продолжения..."
@@ -179,27 +244,3 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         console.print("\n[yellow]Программа прервана пользователем.[/yellow]")
         sys.exit(0)
-
-
-# def main():
-# kb: KnowledgeBase = Parser.process_knowledge_base("lab1/code/source/2.txt")
-# menu()
-
-# if not kb.facts:
-#     print("Artem delay parser")
-# else:
-#     print("Факты:")
-#     for f in kb.facts:
-#         print(fact_to_str(f))
-
-#     print("\nПравила:")
-#     for r in kb.rules:
-#         print(rule_to_str(r))
-# engine = FuzzyInferenceEngine(kb)
-# print("\nПрямой логический вывод: ")
-# if not engine.direct_inference(inferenced_fact_print, ask_continue):
-#     "\nВывод был прерван пользователем\n"
-
-
-# if __name__ == "__main__":
-#     main()
