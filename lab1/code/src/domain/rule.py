@@ -18,14 +18,7 @@ class Rule:
         self._consequent_name: str = consequent.pred_name
         self._antecedent_elements: set[str] = antecedent.fuzzy_set.elements
         self._consequent_elements: set[str] = consequent.fuzzy_set.elements
-        self._relation = {
-            (a, c): lukasevich_implication(
-                antecedent.fuzzy_set.get_membership(a),
-                consequent.fuzzy_set.get_membership(c),
-            )
-            for a in self._antecedent_elements
-            for c in self._consequent_elements
-        }
+        self._relation = self.build_relation_matrix(antecedent, consequent)
 
     @property
     def antecedent_name(self) -> str:
@@ -46,3 +39,17 @@ class Rule:
     @property
     def relation(self) -> dict[tuple[str, str], float]:
         return self._relation
+
+    @staticmethod
+    def build_relation_matrix(
+        antecedent: Fact, consequent: Fact
+    ) -> dict[tuple[str, str], float]:
+        matrix = {
+            (a, c): lukasevich_implication(
+                antecedent.fuzzy_set.get_membership(a),
+                consequent.fuzzy_set.get_membership(c),
+            )
+            for a in antecedent.fuzzy_set.elements
+            for c in consequent.fuzzy_set.elements
+        }
+        return matrix

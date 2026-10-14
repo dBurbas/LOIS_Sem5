@@ -13,7 +13,7 @@ from domain.rule import Rule
 
 class KnowledgeBase:
     def __init__(self):
-        self._rules = []
+        self._rules: list[Rule] = []
         self._facts: list[Fact] = []
 
     def add_rule(self, rule: Rule) -> None:
@@ -37,6 +37,14 @@ class KnowledgeBase:
 
     def get_source_fact(self, name: str) -> Fact | None:
         found = self.facts_by_name(name)
+        return found[0] if found else None
+
+    def rule_by_antecedent_consequent(self, antec: str, conseq: str) -> Rule:
+        found = [
+            r
+            for r in self._rules
+            if r.antecedent_name == antec and r.consequent_name == conseq
+        ]
         return found[0] if found else None
 
     # ?: возможно нужно удалять по имени (но тогда удаляется сразу много фактов)
