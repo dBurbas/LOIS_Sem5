@@ -1,3 +1,14 @@
+# Лабораторная работа №1 по дисциплине ЛОИС
+# Выполнена студентами группы 421702 Бурбасом Дмитрием Юрьевичем и
+# Башурой Артемом Олеговичем
+#
+# Файл основных базовых операций нечеткой логики необходимых для
+# выполнения лабораторной (треугольная норма граничного произведения, импликация Лукаcевича)
+# 03.10.2026
+# Источники:
+# pytest-dev: pytest документация [Электронный ресурс]
+# pytest : документация фреймворка тестирования. – Режим доступа:
+# https://docs.pytest.org. – Дата доступа: 03.10.2026.
 import pytest
 
 from parser.parser import Parser, ParseError
@@ -6,7 +17,9 @@ from parser.parser import Parser, ParseError
 class TestProcessKnowledgeBase:
     def test_simple(self, tmp_path):
         f = tmp_path / "kb.txt"
-        f.write_text("facts\nA(x) = {<a, 0.5>}\nB(x) = {<b, 0.7>}\nrules\nA(x) ~> B(y)\n")
+        f.write_text(
+            "facts\nA(x) = {<a, 0.5>}\nB(x) = {<b, 0.7>}\nrules\nA(x) ~> B(y)\n"
+        )
         kb = Parser.process_knowledge_base(str(f))
         assert len(kb.facts) == 2
         assert len(kb.rules) == 1
@@ -40,12 +53,7 @@ class TestProcessKnowledgeBase:
 
     def test_comments_ignored(self, tmp_path):
         f = tmp_path / "kb.txt"
-        f.write_text(
-            "# comment\n"
-            "facts\n"
-            "// another\n"
-            "A(x) = {<a, 0.5>}\n"
-        )
+        f.write_text("# comment\nfacts\n// another\nA(x) = {<a, 0.5>}\n")
         kb = Parser.process_knowledge_base(str(f))
         assert len(kb.facts) == 1
 

@@ -1,3 +1,14 @@
+# Лабораторная работа №1 по дисциплине ЛОИС
+# Выполнена студентами группы 421702 Бурбасом Дмитрием Юрьевичем и
+# Башурой Артемом Олеговичем
+#
+# Файл основных базовых операций нечеткой логики необходимых для
+# выполнения лабораторной (треугольная норма граничного произведения, импликация Лукаcевича)
+# 03.10.2026
+# Источники:
+# pytest-dev: pytest документация [Электронный ресурс]
+# pytest : документация фреймворка тестирования. – Режим доступа:
+# https://docs.pytest.org. – Дата доступа: 03.10.2026.
 import pytest
 
 from domain.fact import Fact
@@ -23,15 +34,22 @@ class TestRule:
         assert rule.consequent_name == "B"
 
     def test_antecedent_elements(self):
-        rule = Rule(make_fact("A", [("x", 0.5), ("z", 0.3)]), make_fact("B", [("y", 0.5)]))
+        rule = Rule(
+            make_fact("A", [("x", 0.5), ("z", 0.3)]), make_fact("B", [("y", 0.5)])
+        )
         assert rule.antecedent_elements == {"x", "z"}
 
     def test_consequent_elements(self):
-        rule = Rule(make_fact("A", [("x", 0.5)]), make_fact("B", [("y", 0.5), ("w", 0.2)]))
+        rule = Rule(
+            make_fact("A", [("x", 0.5)]), make_fact("B", [("y", 0.5), ("w", 0.2)])
+        )
         assert rule.consequent_elements == {"y", "w"}
 
     def test_relation_size(self):
-        rule = Rule(make_fact("A", [("x", 0.5), ("z", 0.3)]), make_fact("B", [("y", 0.5), ("w", 0.2)]))
+        rule = Rule(
+            make_fact("A", [("x", 0.5), ("z", 0.3)]),
+            make_fact("B", [("y", 0.5), ("w", 0.2)]),
+        )
         assert len(rule.relation) == 4
 
     def test_relation_keys(self):

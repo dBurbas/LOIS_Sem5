@@ -5,7 +5,13 @@
 # Файл основного цикла программы для ручного тестирования фукнционала программы
 # 29.09.2026
 # Источники:
-# TODO: написать источники
+# Questionary: Questionary документация [Электронный ресурс]
+# Questionary : документация библиотеки. – Режим доступа:
+# https://questionary.readthedocs.io. – Дата доступа: 29.09.2026.
+
+# Python Software Foundation: sys — Системные параметры и функции [Электронный ресурс]
+# Python 3 документация : The Python Standard Library. – Режим доступа:
+# https://docs.python.org/3/library/sys.html. – Дата доступа: 28.09.2026.
 import sys
 
 import questionary
@@ -147,6 +153,7 @@ class App:
                 new_file_name = questionary.text("Введите имя файла:").ask()
                 self.kb = Parser.process_knowledge_base(new_file_name)
                 self.engine = FuzzyInferenceEngine(self.kb)
+                console.print("[green]Успешно[/green]")
 
             elif action.startswith("2"):
                 console.print("[green]Вы выбрали:[/green] Вывод фактов базы знаний")

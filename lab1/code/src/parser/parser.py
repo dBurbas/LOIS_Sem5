@@ -6,7 +6,15 @@
 # внутреннюю структуру данных KnowledgeBase
 # 28.09.2026
 # Источники:
-# TODO: написать источники
+# Python Software Foundation: re — Регулярные операции выражения [Электронный ресурс]
+# Python 3 документация : The Python Standard Library. – Режим доступа:
+# https://docs.python.org/3/library/re.html. – Дата доступа: 28.09.2026.
+#
+# Python Software Foundation: collections.abc — Абстрактные базовые классы для контейнеров [Электронный ресурс]
+# Python 3 документация : The Python Standard Library. – Режим доступа:
+# https://docs.python.org/3/library/collections.abc.html. – Дата доступа: 28.09.2026.
+
+
 import re
 from collections.abc import Iterator
 

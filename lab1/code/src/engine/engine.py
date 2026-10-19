@@ -7,7 +7,10 @@
 # норму граничного произведения и импликацию Лукасевича
 # 27.09.2026
 # Источники:
-# TODO: Написать источники
+# Блюмин, С. Л. Нечёткая логика: алгебраические основы и приложения /
+# С. Л. Блюмин, И. А. Шуйкова, П. В. Сараев, И. В. Черпаков. –
+# Липецк : ЛЭГИ, 2002. – 111 с.
+
 
 from domain.fact import Fact, FuzzySet
 from domain.knowledge_base import KnowledgeBase
@@ -62,23 +65,18 @@ class FuzzyInferenceEngine:
         :return: `True` когда вывод выполнен полностью без прерывания, `False` если был прерван пользователем.
         :rtype: bool
         """
-        try:
-            changed = True
-            while changed:
-                changed = False
-                for rule in self.kb.rules:
-                    for observation in list(
-                        self.kb.facts_by_name(rule.antecedent_name)
-                    ):
-                        new_fact = self.generalized_modus_ponens(rule, observation)
-                        if self.kb.has_similar_fact(new_fact):
-                            continue
-                        self.kb.save_fact(new_fact)
-                        changed = True
-                        on_new_fact(new_fact, rule)
+        changed = True
+        while changed:
+            changed = False
+            for rule in self.kb.rules:
+                for observation in list(self.kb.facts_by_name(rule.antecedent_name)):
+                    new_fact = self.generalized_modus_ponens(rule, observation)
+                    if self.kb.has_similar_fact(new_fact):
+                        continue
+                    self.kb.save_fact(new_fact)
+                    changed = True
+                    on_new_fact(new_fact, rule)
 
-                        if not ask_continue():
-                            return False
-        except KeyboardInterrupt:
-            return False
+                    if not ask_continue():
+                        return False
         return True
