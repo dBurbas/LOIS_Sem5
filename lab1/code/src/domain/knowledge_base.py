@@ -25,18 +25,30 @@ class KnowledgeBase:
     def delete_rule(self, index: int) -> None:
         self._rules.pop(index)
 
+    def fact_unique_name(self, base: str) -> str:
+        taken = {f.pred_name for f in self._facts}
+        if base not in taken:
+            return base
+        i = 1
+        while f"{base}{i}" in taken:
+            i += 1
+        return f"{base}{i}"
+
     def save_fact(self, fact: Fact) -> bool:
         self._facts.append(fact)
 
     def has_similar_fact(self, new_fact: Fact) -> bool:
         return any(
-            f.pred_name == new_fact.pred_name
+            f.fuzzy_set.elements == new_fact.fuzzy_set.elements
             and f.fuzzy_set.almost_equals(new_fact.fuzzy_set)
             for f in self._facts
         )
 
     def facts_by_name(self, name: str) -> list[Fact]:
         return [f for f in self._facts if f.pred_name == name]
+
+    def facts_by_domain(self, domain: set[str]):
+        return [f for f in self._facts if domain.issubset(f.fuzzy_set.elements)]
 
     def get_source_fact(self, name: str) -> Fact | None:
         found = self.facts_by_name(name)
