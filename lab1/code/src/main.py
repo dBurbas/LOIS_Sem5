@@ -54,7 +54,7 @@ def inferenced_fact_print(
     :param var1: Переменная для антецедента
     :param var2: Переменная для консеквента"""
     print(
-        f"{fact.pred_name}'({var2}) = sup({{{observation.pred_name}'(x)/~\\({rule_to_str(rule, var1, var2)})|{var1}}}) = {fuzzy_set_to_str(fact.fuzzy_set)}\n"
+        f"{fact.pred_name}'({var2}) = sup({{{observation.pred_name}(x)/~\\({rule_to_str(rule, var1, var2)})|{var1}}}) = {fuzzy_set_to_str(fact.fuzzy_set)}\n"
     )
 
 
