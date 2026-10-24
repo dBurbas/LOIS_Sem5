@@ -62,7 +62,6 @@ class KnowledgeBase:
         ]
         return found[0] if found else None
 
-    # ?: возможно нужно удалять по имени (но тогда удаляется сразу много фактов)
     def remove_fact(self, fact: Fact) -> None:
         try:
             self._facts.remove(fact)
