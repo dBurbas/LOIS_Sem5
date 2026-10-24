@@ -39,7 +39,7 @@ class TestDirectInference:
         kb.add_rule(Rule(a, b))
         engine = FuzzyInferenceEngine(kb)
         collected = []
-        engine.direct_inference(on_new_fact=lambda f, r: collected.append(f))
+        engine.direct_inference(on_new_fact=lambda f, r, o: collected.append(f))
         assert len(collected) >= 1
         assert any(f.pred_name == "B1" for f in collected)
 
@@ -99,5 +99,5 @@ class TestDirectInference:
         kb.add_rule(Rule(a, b))
         engine = FuzzyInferenceEngine(kb)
         calls = []
-        engine.direct_inference(on_new_fact=lambda f, r: calls.append((f, r)))
+        engine.direct_inference(on_new_fact=lambda f, r, o: calls.append((f, r, o)))
         assert len(calls) >= 1
