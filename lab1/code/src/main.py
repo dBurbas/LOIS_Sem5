@@ -33,7 +33,7 @@ def fuzzy_set_to_str(fuzzy_set: FuzzySet) -> str:
     return (
         "{"
         + ", ".join(
-            f"{elem}/{round(membership, 3)}"
+            f"<{elem},{round(membership, 3)}>"
             for elem, membership in fuzzy_set.membership_pairs
         )
         + "}"
@@ -45,7 +45,7 @@ def fact_to_str(fact: Fact, pred_var: str = "x") -> str:
 
 
 def inferenced_fact_print(
-    fact: Fact, rule: Rule, var1: str = "x", var2: str = "y"
+    fact: Fact, rule: Rule, observation: Fact, var1: str = "x", var2: str = "y"
 ) -> None:
     """Вывод в консоль выведенного нового факта на основе правила
     с отображением формулы вывода.
@@ -54,7 +54,7 @@ def inferenced_fact_print(
     :param var1: Переменная для антецедента
     :param var2: Переменная для консеквента"""
     print(
-        f"{fact.pred_name}'({var2}) = sup({{A'(x)/~\\({rule_to_str(rule, var1, var2)})|{var1}}}) = {fuzzy_set_to_str(fact.fuzzy_set)}\n"
+        f"{fact.pred_name}'({var2}) = sup({{{observation.pred_name}'(x)/~\\({rule_to_str(rule, var1, var2)})|{var1}}}) = {fuzzy_set_to_str(fact.fuzzy_set)}\n"
     )
 
 
