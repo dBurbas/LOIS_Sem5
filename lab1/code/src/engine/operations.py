@@ -25,7 +25,9 @@ def bounded_product_t_norm(value1: float, value2: float) -> float:
     :type value2: float
     :rtype: float
     """
-    return max(0.0, value1 + value2 - 1.0)
+    value1 = round(value1, 12)
+    value2 = round(value2, 12)
+    return round(max(0.0, value1 + value2 - 1.0), 12)
 
 
 def lukasevich_implication(value1: float, value2: float) -> float:
@@ -42,4 +44,6 @@ def lukasevich_implication(value1: float, value2: float) -> float:
     :type value2: float
     :rtype: float
     """
-    return min(1.0, 1.0 - value1 + value2)
+    value1 = round(value1, 12)
+    value2 = round(value2, 12)
+    return round(min(1.0, 1.0 - value1 + value2), 12)
