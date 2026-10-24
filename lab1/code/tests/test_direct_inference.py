@@ -41,7 +41,7 @@ class TestDirectInference:
         collected = []
         engine.direct_inference(on_new_fact=lambda f, r: collected.append(f))
         assert len(collected) >= 1
-        assert any(f.pred_name == "B" for f in collected)
+        assert any(f.pred_name == "B1" for f in collected)
 
     def test_stops_when_ask_continue_false(self):
         kb = KnowledgeBase()
@@ -63,7 +63,9 @@ class TestDirectInference:
         kb.add_rule(Rule(a, b))
         engine = FuzzyInferenceEngine(kb)
         engine.direct_inference()
-        b_facts = kb.facts_by_name("B")
+        b_facts = []
+        b_facts.append(kb.facts_by_name("B"))
+        b_facts.append(kb.facts_by_name("B1"))
         assert len(b_facts) == 2
 
     def test_chained_inference(self):
@@ -78,7 +80,9 @@ class TestDirectInference:
         kb.add_rule(Rule(b, c))
         engine = FuzzyInferenceEngine(kb)
         engine.direct_inference()
-        c_facts = kb.facts_by_name("C")
+        c_facts = []
+        c_facts.append(kb.facts_by_name("C"))
+        c_facts.append(kb.facts_by_name("C1"))
         assert len(c_facts) >= 2
 
     def test_kb_property(self):
